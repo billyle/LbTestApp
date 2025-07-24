@@ -5,16 +5,12 @@ services:
   spring-boot-app:
     build: 
       context: .
-      dockerfile: docker/Dockerfile
+      dockerfile: Dockerfile
     ports:
       - "8080:8080"
     depends_on:
-    #  - redis
-    #  - zookeeper
-    #  - rocketmq
-    #  - kafka
+      - redis
       - mysql
-    #  - mongodb
     environment:
       - MYSQL_HOST=mysql
       - MYSQL_USER=${MYSQL_USER}
@@ -23,7 +19,7 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/lb_test_app_db
       - SPRING_DATASOURCE_USERNAME=${MYSQL_USER}
       - SPRING_DATASOURCE_PASSWORD=${MYSQL_PASSWORD}
-    #  - SPRING_DATA_MONGODB_URI=mongodb://mongodb/lb_test_app_db
+      - SPRING_REDIS_HOST=redis
     #  - SPRING_REDIS_HOST=redis
     #  - SPRING_ZOOKEEPER_HOST=zookeeper
     #  - SPRING_KAFKA_BOOTSTRAP_SERVERS=kafka:9092
@@ -52,10 +48,12 @@ services:
       - mysql
 
   # Redis
-  #redis:
-  #  image: "redis:alpine"
-  #  ports:
-  #    - "6379:6379"
+  redis:
+    image: "redis:alpine"
+    ports:
+      - "6379:6379"
+    networks:
+      - mysql
 
   # Zookeeper
   # zookeeper:
