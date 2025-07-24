@@ -5,7 +5,7 @@ FROM openjdk:8-jdk-alpine
 WORKDIR /app
 
 # 将打包好的 JAR 文件复制到镜像中
-COPY target/${project.artifactId}-${project.version}.jar app.jar
+COPY target/@project.artifactId@-@project.version@.jar app.jar
 
 # 暴露应用程序端口
 EXPOSE 8080

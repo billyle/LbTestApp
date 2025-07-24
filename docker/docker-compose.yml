@@ -4,7 +4,7 @@ services:
   # Spring Boot 应用
   spring-boot-app:
     build: 
-      context: .
+      context: ..
       dockerfile: docker/Dockerfile
     ports:
       - "8080:8080"
@@ -47,7 +47,7 @@ services:
       # 持久化 MySQL 数据
       - mysql_data:/var/lib/mysql
       # 挂载初始化脚本到容器内，并重命名为容器期望的初始化脚本名
-      - ./mysql/sql/init_mysql.sql:/docker-entrypoint-initdb.d/init_script.sql
+      - ../mysql/sql/init_mysql.sql:/docker-entrypoint-initdb.d/init_script.sql
     networks:
       - mysql
 
